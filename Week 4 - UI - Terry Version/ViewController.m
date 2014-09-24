@@ -106,7 +106,7 @@
 
 -(IBAction)sampleButtonAction {
     self.headerLabel.text = @"User Clicked on Dynamic Button";
-    [self.myImageView setImage:nil];
+    [self.myImageView setImage:[UIImage imageNamed:@"pikachu.png"]];
 }
 //order seems to matter for declaring this action
 
@@ -131,8 +131,41 @@
                                 nil];
     [segmentCtrl setTitleTextAttributes:attributes forState:UIControlStateNormal];
     
+    [segmentCtrl addTarget:self action:@selector(pushSegmentControl:) forControlEvents:UIControlEventValueChanged];
+    
     [self.view addSubview:segmentCtrl];
 }
+
+-(IBAction)pushSegmentControl:(id)sender{
+    switch (((UISegmentedControl *)sender).selectedSegmentIndex) {
+        case 0:
+            
+            //Label Change
+            self.headerLabel.text = @"You click the Jamba";
+            self.headerLabel.backgroundColor = [UIColor redColor];
+            self.headerLabel.textColor = [UIColor blackColor];
+            
+            //Image Display
+            self.myImageView.image = [UIImage imageNamed:@"jamba.jpeg"];
+            
+            break;
+            
+        case 1:
+            
+            self.headerLabel.text = @"You click the Chipotle";
+            self.headerLabel.backgroundColor = [UIColor whiteColor];
+            
+            self.myImageView.image = [UIImage imageNamed:@"bulbasaur.png"];
+            
+            break;
+            
+        default:
+            break;
+    }
+}
+
+
+
 
 -(void)createImageView {
     self.myImageView = [[UIImageView alloc]initWithFrame:CGRectMake(50, 50, 50, 50)];

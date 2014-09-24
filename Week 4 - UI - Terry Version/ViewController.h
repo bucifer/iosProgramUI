@@ -22,5 +22,6 @@
 -(void) createRelativeLabel;
 
 -(IBAction)sampleButtonAction;
+-(IBAction)pushSegmentControl:(id)sender;
 
 @end
