@@ -21,6 +21,8 @@
     [self createLabel];
     [self createButton];
     [self createSegment];
+    [self createImageView];
+
 }
 
 -(void)createLabel
@@ -30,16 +32,28 @@
     self.headerLabel.font = [UIFont fontWithName:@"Arial" size:22];
     self.headerLabel.text = @"HELLO WORLD";
     self.headerLabel.backgroundColor = [UIColor greenColor];
+    self.headerLabel.numberOfLines = 0;
     [self.view addSubview:self.headerLabel];
 }
+
+
+-(IBAction)sampleButtonAction {
+    self.headerLabel.text = @"User Clicked on Dynamic Button";
+    [self.myImageView setImage:nil];
+}
+//order seems to matter for declaring this action
 
 -(void)createButton
 {
     UIButton *sampleButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 30, 150, 30)];
     [sampleButton setBackgroundColor:[UIColor blackColor]];
     [sampleButton setTitle:@"Dynamic Button" forState:UIControlStateNormal];
+    [sampleButton addTarget:self action:@selector(sampleButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:sampleButton];
 }
+
+
+
 
 -(void)createSegment
 {
@@ -49,6 +63,10 @@
     [self.view addSubview:segmentCtrl];
 }
 
+-(void)createImageView {
+    self.myImageView = [[UIImageView alloc]initWithFrame:CGRectMake(400, 70, 100, 50)];
+    [self.view addSubview:self.myImageView];
+}
 
 
 

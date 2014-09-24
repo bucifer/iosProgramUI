@@ -11,11 +11,13 @@
 @interface ViewController : UIViewController
 
 @property (nonatomic,retain) UILabel *headerLabel;
-
-
+@property (nonatomic,strong) UIImageView *myImageView;
 
 -(void) createLabel;
 -(void) createButton;
 -(void) createSegment;
+-(void) createImageView;
+
+-(IBAction)sampleButtonAction;
 
 @end
