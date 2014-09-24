@@ -24,36 +24,45 @@
     [self createImageView];
     [self createRelativeLabel];
     
-    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.headerLabel attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:10.f];
+    [self.relativeLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     
-    [self.view addConstraint:constraint];
-    
-    constraint = [NSLayoutConstraint constraintWithItem:self.headerLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0f constant:10.f];
-    
-    [self.view addConstraint:constraint];
-    
-    
-}
 
--(void)viewWillAppear:(BOOL)animated{
-    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)  name:UIDeviceOrientationDidChangeNotification  object:nil];
-}
-
-- (void)orientationChanged:(NSNotification *)notification{
-    [self handleOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-}
-
-- (void) handleOrientation:(UIInterfaceOrientation) orientation {
+    // Width constraint, half of parent view width
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.relativeLabel
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeWidth
+                                                         multiplier:0.1
+                                                           constant:0]];
     
-    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown)
-    {
-        NSLog(@"Portrait view");
-    }
-    else if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight)
-    {
-        NSLog(@"Landscape view");
-        
-    }
+    // Height constraint, half of parent view height
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.relativeLabel
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeHeight
+                                                         multiplier:0.1
+                                                           constant:0]];
+
+    // Stick it to the right
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.relativeLabel
+                                                          attribute:NSLayoutAttributeRight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeRight
+                                                         multiplier:1.0
+                                                           constant:0.0]];
+    
+    // Center vertically
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.relativeLabel
+                                                          attribute:NSLayoutAttributeBottom
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1.0
+                                                           constant:0.0]];
+
 }
 
 
@@ -69,7 +78,7 @@
 }
 
 -(void)createRelativeLabel {
-    self.relativeLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-50, self.view.frame.size.height-50,  50,50)];
+    self.relativeLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 50,50)];
     self.relativeLabel.backgroundColor = [UIColor redColor];
     [self.view addSubview: self.relativeLabel];
 }
