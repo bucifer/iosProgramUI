@@ -12,11 +12,14 @@
 
 @property (nonatomic,retain) UILabel *headerLabel;
 @property (nonatomic,strong) UIImageView *myImageView;
+@property (nonatomic, strong) UILabel *relativeLabel;
 
 -(void) createLabel;
 -(void) createButton;
 -(void) createSegment;
 -(void) createImageView;
+
+-(void) createRelativeLabel;
 
 -(IBAction)sampleButtonAction;
 

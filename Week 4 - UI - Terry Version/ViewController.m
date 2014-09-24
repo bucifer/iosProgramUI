@@ -22,8 +22,40 @@
     [self createButton];
     [self createSegment];
     [self createImageView];
-
+    [self createRelativeLabel];
+    
+    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.headerLabel attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:10.f];
+    
+    [self.view addConstraint:constraint];
+    
+    constraint = [NSLayoutConstraint constraintWithItem:self.headerLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0f constant:10.f];
+    
+    [self.view addConstraint:constraint];
+    
+    
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)  name:UIDeviceOrientationDidChangeNotification  object:nil];
+}
+
+- (void)orientationChanged:(NSNotification *)notification{
+    [self handleOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
+}
+
+- (void) handleOrientation:(UIInterfaceOrientation) orientation {
+    
+    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown)
+    {
+        NSLog(@"Portrait view");
+    }
+    else if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight)
+    {
+        NSLog(@"Landscape view");
+        
+    }
+}
+
 
 -(void)createLabel
 {
@@ -34,6 +66,12 @@
     self.headerLabel.backgroundColor = [UIColor greenColor];
     self.headerLabel.numberOfLines = 0;
     [self.view addSubview:self.headerLabel];
+}
+
+-(void)createRelativeLabel {
+    self.relativeLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-50, self.view.frame.size.height-50,  50,50)];
+    self.relativeLabel.backgroundColor = [UIColor redColor];
+    [self.view addSubview: self.relativeLabel];
 }
 
 
@@ -53,12 +91,16 @@
 }
 
 
-
-
 -(void)createSegment
 {
-    UISegmentedControl *segmentCtrl = [[[UISegmentedControl alloc] initWithFrame:CGRectMake(15, 350, 320, 60) ] initWithItems:[NSArray arrayWithObjects:@"TurnToTech",@"Qcd", nil]];
-    [segmentCtrl setBackgroundColor:[UIColor blackColor]];
+    UISegmentedControl *segmentCtrl = [[[UISegmentedControl alloc] initWithFrame:CGRectMake(50, self.view.frame.size.height/2, 50, 60) ] initWithItems:[NSArray arrayWithObjects:@"Jamba",@"Chipotle", nil]];
+    [segmentCtrl setBackgroundColor:[UIColor blueColor]];
+    
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [UIFont boldSystemFontOfSize:17], NSFontAttributeName,
+                                [UIColor whiteColor], NSForegroundColorAttributeName,
+                                nil];
+    [segmentCtrl setTitleTextAttributes:attributes forState:UIControlStateNormal];
     
     [self.view addSubview:segmentCtrl];
 }
