@@ -25,7 +25,7 @@
     [self createRelativeLabel];
     
     [self.relativeLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
+    [self.myImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
 
     // Width constraint, half of parent view width
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.relativeLabel
@@ -45,7 +45,7 @@
                                                          multiplier:0.1
                                                            constant:0]];
 
-    // Stick it to the right
+    // Stick red box to the right
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.relativeLabel
                                                           attribute:NSLayoutAttributeRight
                                                           relatedBy:NSLayoutRelationEqual
@@ -54,7 +54,7 @@
                                                          multiplier:1.0
                                                            constant:0.0]];
     
-    // Center vertically
+    // Stick red box to the bottom
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.relativeLabel
                                                           attribute:NSLayoutAttributeBottom
                                                           relatedBy:NSLayoutRelationEqual
@@ -63,6 +63,26 @@
                                                          multiplier:1.0
                                                            constant:0.0]];
 
+    // Stick pikachu to the left
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.myImageView
+                                                          attribute:NSLayoutAttributeLeft
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeLeft
+                                                         multiplier:1.0
+                                                           constant:0.0]];
+    
+    // Stick pikachu to the bottom
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.myImageView
+                                                          attribute:NSLayoutAttributeBottom
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1.0
+                                                           constant:0.0]];
+    
+    
+    
 }
 
 
@@ -102,7 +122,7 @@
 
 -(void)createSegment
 {
-    UISegmentedControl *segmentCtrl = [[[UISegmentedControl alloc] initWithFrame:CGRectMake(50, self.view.frame.size.height/2, 50, 60) ] initWithItems:[NSArray arrayWithObjects:@"Jamba",@"Chipotle", nil]];
+    UISegmentedControl *segmentCtrl = [[[UISegmentedControl alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height/2, 50, 60) ] initWithItems:[NSArray arrayWithObjects:@"Jamba",@"Chipotle", nil]];
     [segmentCtrl setBackgroundColor:[UIColor blueColor]];
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -115,7 +135,8 @@
 }
 
 -(void)createImageView {
-    self.myImageView = [[UIImageView alloc]initWithFrame:CGRectMake(400, 70, 100, 50)];
+    self.myImageView = [[UIImageView alloc]initWithFrame:CGRectMake(50, 50, 50, 50)];
+    self.myImageView.image = [UIImage imageNamed:@"pikachu.png"];
     [self.view addSubview:self.myImageView];
 }
 
