@@ -15,6 +15,7 @@
 
 
 -(void) createLabel;
-
+-(void) createButton;
+-(void) createSegment;
 
 @end
