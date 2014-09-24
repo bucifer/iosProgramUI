@@ -26,6 +26,7 @@
     
     [self.relativeLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.myImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.headerLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 
     // Width constraint, half of parent view width
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.relativeLabel
@@ -82,7 +83,23 @@
                                                            constant:0.0]];
     
     
+    // Stick headerlabel to the right
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.headerLabel
+                                                          attribute:NSLayoutAttributeRight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeRight
+                                                         multiplier:1.0
+                                                           constant:0.0]];
     
+    // Stick headerlabel to the top
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.headerLabel
+                                                          attribute:NSLayoutAttributeTop-10
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeTop
+                                                         multiplier:1.0
+                                                           constant:0.0]];
 }
 
 
