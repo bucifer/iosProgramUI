@@ -24,45 +24,8 @@
     [self createImageView];
     [self createRelativeLabel];
     
-    [self.relativeLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.myImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.headerLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-
-    // Width constraint, half of parent view width
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.relativeLabel
-                                                          attribute:NSLayoutAttributeWidth
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view
-                                                          attribute:NSLayoutAttributeWidth
-                                                         multiplier:0.1
-                                                           constant:0]];
-    
-    // Height constraint, half of parent view height
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.relativeLabel
-                                                          attribute:NSLayoutAttributeHeight
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view
-                                                          attribute:NSLayoutAttributeHeight
-                                                         multiplier:0.1
-                                                           constant:0]];
-
-    // Stick red box to the right
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.relativeLabel
-                                                          attribute:NSLayoutAttributeRight
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view
-                                                          attribute:NSLayoutAttributeRight
-                                                         multiplier:1.0
-                                                           constant:0.0]];
-    
-    // Stick red box to the bottom
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.relativeLabel
-                                                          attribute:NSLayoutAttributeBottom
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view
-                                                          attribute:NSLayoutAttributeBottom
-                                                         multiplier:1.0
-                                                           constant:0.0]];
 
     // Stick pikachu to the left
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.myImageView
@@ -114,18 +77,14 @@
     [self.view addSubview:self.headerLabel];
 }
 
--(void)createRelativeLabel {
-    self.relativeLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 50,50)];
-    self.relativeLabel.backgroundColor = [UIColor redColor];
-    [self.view addSubview: self.relativeLabel];
-}
+
 
 
 -(IBAction)sampleButtonAction {
     self.headerLabel.text = @"User Clicked on Dynamic Button";
     [self.myImageView setImage:[UIImage imageNamed:@"pikachu.png"]];
 }
-//order seems to matter for declaring this action
+//order seems to matter for declaring this action .. create the action before you add it to the button
 
 -(void)createButton
 {
@@ -139,7 +98,7 @@
 
 -(void)createSegment
 {
-    UISegmentedControl *segmentCtrl = [[[UISegmentedControl alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height/2, 50, 60) ] initWithItems:[NSArray arrayWithObjects:@"Jamba",@"Chipotle", nil]];
+    UISegmentedControl *segmentCtrl = [[[UISegmentedControl alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height/2, 50, 50) ] initWithItems:[NSArray arrayWithObjects:@"Jamba",@"Chipotle", nil]];
     [segmentCtrl setBackgroundColor:[UIColor blueColor]];
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -158,7 +117,7 @@
         case 0:
             
             //Label Change
-            self.headerLabel.text = @"You click the Jamba";
+            self.headerLabel.text = @"You do the Jamba";
             self.headerLabel.backgroundColor = [UIColor redColor];
             self.headerLabel.textColor = [UIColor blackColor];
             
@@ -169,7 +128,7 @@
             
         case 1:
             
-            self.headerLabel.text = @"You click the Chipotle";
+            self.headerLabel.text = @"You do the Chipotle";
             self.headerLabel.backgroundColor = [UIColor whiteColor];
             
             self.myImageView.image = [UIImage imageNamed:@"bulbasaur.png"];
@@ -182,6 +141,29 @@
 }
 
 
+-(void)createRelativeLabel {
+    self.relativeLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-50, self.view.frame.size.height-50, 50, 50)];
+    self.relativeLabel.backgroundColor = [UIColor redColor];
+    [self.view addSubview: self.relativeLabel];
+    
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    NSLog(@"Rotate Go!");
+    //this is how you check the Orientation of your view
+    if (UIInterfaceOrientationIsLandscape(self.view.window.rootViewController.interfaceOrientation)) {
+        self.relativeLabel.frame = CGRectMake(self.view.frame.size.height-50, self.view.frame.size.width-50, 50, 50);
+    }
+    else if (UIInterfaceOrientationIsPortrait(self.view.window.rootViewController.interfaceOrientation)) {
+        self.relativeLabel.frame = CGRectMake(self.view.frame.size.width-50, self.view.frame.size.height-50, 50, 50);
+    }
+    
+    NSLog(@"%f %f", self.view.frame.size.width, self.view.frame.size.height);
+}
+
+
+
 
 
 -(void)createImageView {
@@ -189,8 +171,6 @@
     self.myImageView.image = [UIImage imageNamed:@"pikachu.png"];
     [self.view addSubview:self.myImageView];
 }
-
-
 
 - (void)didReceiveMemoryWarning
 {
